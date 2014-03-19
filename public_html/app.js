@@ -242,7 +242,7 @@ app.get('/devices/:deviceId/channels/:channelId', function(req, res) {
                                return res.status(404).send("channel not found");
                        }
                        
-                       collection.findOne({"_id" : deviceId+"-"+channelId},function(err,deviceChannelData){
+                       collection.findOne({"_id" : deviceId+"-"+channelId} , {"values" :{ $slice : -limit} },function(err,deviceChannelData){
                            if(err)
                                return res.status(500).send("Server error");
                            if(deviceChannelData){
