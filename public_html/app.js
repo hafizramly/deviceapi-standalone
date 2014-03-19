@@ -245,7 +245,10 @@ app.get('/devices/:deviceId/channels/:channelId', function(req, res) {
                        collection.findOne({"_id" : deviceId+"-"+channelId},function(err,deviceChannelData){
                            if(err)
                                return res.status(500).send("Server error");
-                           return res.send(deviceChannelData.values);
+                           if(deviceChannelData.values)
+                            return res.send(deviceChannelData.values);
+                           else
+                               return res.send("No data found");
                        });
                        
                        
