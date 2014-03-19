@@ -35,7 +35,7 @@ app.post('/devices', function(req, res) {
                     return res.status(400).send("Failed");
                 }
                 console.log("Record added as " + records[0]._id);
-                return res.send("User added");
+                return res.send("Device "+deviceBody.serialNumber+" added");
             });
 
 
@@ -216,7 +216,9 @@ app.get('/devices/:deviceId/channels/:channelId', function(req, res) {
     MongoClient.connect('mongodb://127.0.0.1:27017/test', function(err, db) {
         if (err)
             return res.status(500).send('Internal server error' + err.message);
-
+        var limit = req.query.limit;
+        if(!limit)
+            limit = 100;
         var dataBody = req.body;
         var deviceId = req.param('deviceId');
         var channelId = req.param('channelId');
